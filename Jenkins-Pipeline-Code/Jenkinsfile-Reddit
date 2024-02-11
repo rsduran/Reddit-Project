@@ -54,8 +54,8 @@ pipeline{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
                        sh "docker build -t reddit ."
-                       sh "docker tag reddit sreedhar8897/reddit:latest "
-                       sh "docker push sreedhar8897/reddit:latest "
+                       sh "docker tag reddit sreedhar8897/reddit:${BUILD_NUMBER} "
+                       sh "docker push sreedhar8897/reddit:${BUILD_NUMBER} "
                     }
                 }
             }
@@ -71,6 +71,7 @@ pipeline{
                 GIT_USER_NAME = "uniquesreedhar"
             }
             steps {
+                dir('K8s'){
                     withCredentials([string(credentialsId: 'githubcred', variable: 'GITHUB_TOKEN')]) {
                         sh '''
                             git config user.email "madithatisreedhar123@gmail.com"
@@ -89,4 +90,4 @@ pipeline{
             }
         }
     }
-
+}
