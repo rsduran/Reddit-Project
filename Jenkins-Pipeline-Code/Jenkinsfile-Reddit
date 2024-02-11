@@ -71,14 +71,13 @@ pipeline{
                 GIT_USER_NAME = "uniquesreedhar"
             }
             steps {
-                dir('Manifest-file') {
                     withCredentials([string(credentialsId: 'githubcred', variable: 'GITHUB_TOKEN')]) {
                         sh '''
                             git config user.email "madithatisreedhar123@gmail.com"
                             git config user.name "uniquesreedhar"
                             BUILD_NUMBER=${BUILD_NUMBER}
                             echo $BUILD_NUMBER
-                            imageTag=$(grep -oP '(?<=tetris-project:)[^ ]+' deployment.yml)
+                            imageTag=$(grep -oP '(?<=reddit:)[^ ]+' deployment.yml)
                             echo $imageTag
                             sed -i "s/reddit:${imageTag}/reddit:${BUILD_NUMBER}/" deployment.yml
                             git add deployment.yml
@@ -90,4 +89,4 @@ pipeline{
             }
         }
     }
-}
+
